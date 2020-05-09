@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+    <head>
+        <title>royale</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Home page of m1ke.co">
+        <meta name="author" content="Mike M">
+
+        <link href="/img/avatar.png" rel="icon" type="image/png">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link href="/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet">
+
+        <link type="text/css" href="/css/argon.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="/css/kit.css" rel="stylesheet">
+        <link type="text/css" href="/css/toast.css" rel="stylesheet">
+        <link type="text/css" href="/css/scrollbar.css" rel="stylesheet">
+
+        <script src="/vendor/jquery/jquery.min.js"></script>
+
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+
+        <script src="/vendor/popper/popper.min.js"></script>
+        <script src="/vendor/bootstrap/bootstrap.min.js"></script>
+        <script src="/vendor/headroom/headroom.min.js"></script>
+        <script src="/vendor/onscreen/onscreen.min.js"></script>
+        <script src="/vendor/nouislider/js/nouislider.min.js"></script>
+        <script src="/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    </head>
+    <body class="profile-page bg-custom">
+        <header class="header-global">
+            <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light">
+                <div class="container">
+                    <a class="navbar-brand mr-lg-1" href="/">
+                        <img class="nav-logo-fix" src="/img/branding/argon_white.png">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse" id="navbar_global">
+                        <div class="navbar-collapse-header">
+                            <div class="row">
+                                <div class="col-6 collapse-brand">
+                                    <a href="/">
+                                        <img src="/img/branding/argon_white.png">
+                                    </a>
+                                </div>
+                                <div class="col-6 collapse-close">
+                                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="navbar-nav navbar-nav-hover align-items-lg-center"></ul>
+                        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                            {{#if auth}}
+                            <li class="nav-item dropdown">
+                                <a class="btn text-white" href="#" id="accounts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="btn-inner--icon">
+                                            <img src="https://s3.amazonaws.com/argon-attachments/1540657588260-avatar.png" alt="img" class="pfp-box">
+                                        </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accounts" style="margin-top: 0.7rem;">
+                                    <div class="dropdown-header">
+                                        <h6 class="text-overflow noti-title m-0">Signed in as <b class="text-blue" style="font-weight: 500;">{{user.username}}</b></h6>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/u/@me">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                    <a class="dropdown-item" href="/prefs">
+                                        <i class="fas fa-cog"></i>
+                                        <span>Preferences</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </li>
+                            {{else}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link nav-link-icon" href="#" id="accounts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-lock"></i>
+                                    <span class="nav-link-inner--text d-lg-none">Accounts</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accounts">
+                                    <a href="/login" class="dropdown-item">Login</a>
+                                    <a href="/register" class="dropdown-item">Register</a>
+                                </div>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class="profile-page">
+            <section class="section-profile-cover section-shaped my-0">
+                <div class="position-relative">
+                    <section class="section-shaped my-0">
+                        <div id="particles" class="particle"></div>
+                        <div id="daylight" class="shape shape-style-2 shape-custom shape-skew"></div>
+                        <div class="container shape-container d-flex">
+                            <div class="col px-0">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+            <section class="section section-lg pt-lg-0 mt--300">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="row row-grid">
+                                <div class="col-lg-3 pr-0">
+                                    <div class="card shadow border-0">
+                                        <div class="card-body py-10">
+                                            <object data="/svg/default_profile_image.svg" class="img-fluid img-center pfp"></object>
+                                            <div class="h-divider"></div>
+                                            <pre class="thick-500 mt-5 mb-2"><i class="fa fa-trophy fa-fw text-argon"></i> Trophies</pre>
+                                            
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Trophies</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.trophies}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Most Trophies</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.maxTrophies}}</h6></div>
+                                            </div>
+
+                                            <div class="h-divider"></div>
+                                            <pre class="thick-500 mb-2"><i class="fa fa-chess-rook fa-fw text-argon"></i> Battles</pre>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Wins</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.games.wins}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Losses</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.games.losses}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Draws</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.games.draws}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head help" data-tippy="Three Crown Wins"><h6 class="text-default stat">TCWs</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.threeCrownWins}}</h6></div>
+                                            </div>
+
+                                            <div class="h-divider"></div>
+                                            <pre class="thick-500 mb-2"><i class="fa fa-clone fa-fw text-argon"></i> Cards</pre>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Total Cards</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.cardsFound}}/92</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Favorite Card</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.favoriteCard.name}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Cards Won</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.tournamentCardsWon}}</h6></div>
+                                            </div>
+
+                                            <div class="h-divider"></div>
+                                            <pre class="thick-500 mb-2"><i class="fa fa-file-alt fa-fw text-argon"></i> Misc</pre>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Level</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{user.stats.level}}</h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Clan</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat"><a href="/clans/{{user.clan.tag}}" class="text-argon">{{user.clan.name}}</a></h6></div>
+                                            </div>
+
+                                            <div class="statistic">
+                                                <div class="head"><h6 class="text-default stat">Total Donations</h6></div>
+                                                <div class="divider"></div>
+                                                <div class="value"><h6 class="text-default stat">{{localizeNumber user.stats.totalDonations}}</h6></div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="card bg-argon shadow-lg border-0 no-rad">
+                                        <div class="p-4">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-12">
+                                                    <h3 class="text-white va-m"><strong class="user-title">{{user.name}}</strong> <small class="discriminator cr-tag text-secondary" data-tippy="Click to copy" data-clipboard-text="{{user.tag}}">#{{user.tag}}</small></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadow border-0">
+                                        <div class="card-body pt-0">
+                                            <div class="nav-wrapper wrap">
+                                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 active pills-argon" id="tabs-icons-text-1-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-crown fa-fw mr-2"></i>Overview</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 pills-argon" id="tabs-icons-text-1-tab" data-toggle="tab" href="#cards" role="tab" aria-controls="tabs-icons-text-1" aria-selected="false"><i class="fa fa-clone fa-fw mr-2"></i>Cards</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 pills-argon" id="tabs-icons-text-3-tab" data-toggle="tab" href="#chests" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-briefcase fa-fw mr-2"></i>Chests</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 pills-argon" id="tabs-icons-text-2-tab" data-toggle="tab" href="#battles" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fa fa-chess-rook fa-fw mr-2"></i>Battles</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 pills-argon" id="tabs-icons-text-1-tab" data-toggle="tab" href="#raw" role="tab" aria-controls="tabs-icons-text-1" aria-selected="false"><i class="fa fa-sitemap fa-fw mr-2"></i>Raw</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link mb-sm-3 mb-md-0 pills-argon" id="tabs-icons-text-3-tab" data-toggle="tab" href="#metrics" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-bolt fa-fw mr-2"></i>Metrics</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="card shadow">
+                                                <div class="card-body">
+                                                    <div class="tab-content" id="myTabContent">
+                                                        <div class="tab-pane show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                                                            <pre class="section-title pb-2">General Information</pre>
+                                                            <p class="description">
+
+                                                            </p>
+                                                            <pre class="section-title pt-2 pb-1">Current Deck</pre>
+                                                            <p class="description">
+                                                                <b><a href="{{user.deckLink}}" class="text-argon">Click here</a></b> to copy this deck.
+                                                                <br>
+                                                                This deck costs an average of <b>{{calculateAvgElixir user.currentDeck}}<i class="fa fa-tint fa-fw text-argon"></i></b>
+                                                                <div class="row pt-2 ml-1">
+                                                                    {{#each user.currentDeck}}
+                                                                        <div class="col-md-1 mr-4">
+                                                                            <img src="{{this.icon}}" alt="{{this.name}}" style="width: 60px !important; height: 80px !important;" data-tippy="<b>{{this.name}}</b><br/>{{this.type}} Card<br/><br/><i>{{this.description}}</i><br/><br/>Unlocked in Arena {{this.arena}}<br/>Costs {{this.elixir}} elixir<br/>{{this.leftToUpgrade}}/{{this.requiredForUpgrade}} to next level">
+                                                                        </div>
+                                                                    {{/each}}
+                                                                </div>
+                                                            </p>
+                                                            <pre class="section-title pt-2 pb-1">League Information</pre>
+                                                            <p class="description">
+                                                                {{#if user.leagueStatistics}}
+                                                                    This season, {{user.name}} peaked at <span class="text-custom">{{user.leagueStatistics.currentSeason.bestTrophies}} trophies</span> and is currently at <span class="text-custom">{{user.leagueStatistics.currentSeason.trophies}} trophies</span>.
+                                                                    <br>
+                                                                    Last season ({{user.leagueStatistics.previousSeason.id}}), {{user.name}} peaked at <span class="text-custom">{{user.leagueStatistics.previousSeason.bestTrophies}} trophies</span> and finished with <span class="text-custom">{{user.leagueStatistics.previousSeason.trophies}} trophies</span>.
+                                                                {{else}}
+                                                                    This member has never been part of a league, or their league statistics are not available.
+                                                                {{/if}}                                                             
+                                                            </p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="cards" role="tabpanel" aria-labelledby="cards">
+                                                            <pre class="section-title pb-2">Your cards</pre>
+                                                            <p class="description">
+                                                                You own <b class="text-argon">{{user.stats.cardsFound}}/92</b> of the currently available cards.
+                                                                <br>
+                                                                Your favorite card is currently the <b class="text-argon">{{user.stats.favoriteCard.name}}</b>.
+                                                            </p>
+                                                            <div class="row pt-2 mr-0">
+                                                                {{#each user.cards}}
+                                                                    <div class="col-md-2">
+                                                                        <img src="{{this.icon}}" alt="{{this.name}}" style="width: 90px !important; height: 110px !important;" data-tippy="<b>{{this.name}}</b><br/>{{this.type}} Card<br/><br/><i>{{this.description}}</i><br/><br/>Unlocked in Arena {{this.arena}}<br/>Costs {{this.elixir}} elixir<br/>{{this.leftToUpgrade}}/{{this.requiredForUpgrade}} to next level">
+                                                                    </div>
+                                                                {{/each}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="chests" role="tabpanel" aria-labelledby="chests">
+                                                            <pre class="section-title pb-2">Upcoming Chests</pre>
+                                                            <p class="description">
+                                                                <div class="row">
+                                                                    {{#each user.chests.upcoming}}
+                                                                        <div class="col-md-2">
+                                                                            <img src="{{getChestAsset this}}" alt="{{this}}" class="img-fluid" style="width: 90px !important; height: 90px !important;" data-tippy="<b>{{capitalizeFirst this}} Chest</b><br/>This chest will be awarded in {{increment @index}} win{{pluralEnding (increment @index)}}.">
+                                                                        </div>
+                                                                    {{/each}}
+                                                                </div>
+                                                            </p>
+                                                            <pre class="section-title pt-4 pb-2">Upcoming Chests By Type</pre>
+                                                            <p class="description">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <img src="https://royaleapi.github.io/cr-api-assets/chests/chest-legendary.png" alt="Legendary Chest" class="img-fluid" style="width: 90px !important; height: 90px !important;" data-tippy="<b>Legendary Chest</b><br/>This chest will be awarded in {{user.chests.legendary}} win{{pluralEnding user.chests.legendary}}.">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <img src="https://royaleapi.github.io/cr-api-assets/chests/chest-magical.png" alt="Magical Chest" class="img-fluid" style="width: 90px !important; height: 90px !important;" data-tippy="<b>Magical Chest</b><br/>This chest will be awarded in {{user.chests.magical}} win{{pluralEnding user.chests.magical}}.">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <img src="https://royaleapi.github.io/cr-api-assets/chests/chest-epic.png" alt="Epic Chest" class="img-fluid" style="width: 90px !important; height: 90px !important;" data-tippy="<b>Epic Chest</b><br/>This chest will be awarded in {{user.chests.epic}} win{{pluralEnding user.chests.epic}}.">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <img src="https://royaleapi.github.io/cr-api-assets/chests/chest-giant.png" alt="Giant Chest" class="img-fluid" style="width: 90px !important; height: 90px !important;" data-tippy="<b>Giant Chest</b><br/>This chest will be awarded in {{user.chests.giant}} win{{pluralEnding user.chests.giant}}.">
+                                                                    </div>
+                                                                </div>
+                                                            </p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="battles" role="tabpanel" aria-labelledby="battles">
+                                                            <p class="description">oo ee oo aa aa walla walla bing bong</p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="raw" role="tabpanel" aria-labelledby="raw" style="overflow-y: scroll;">
+                                                            <code class="wsp raw-json">{{jsonPretty user}}</code>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="metrics" role="tabpanel" aria-labelledby="metrics">
+                                                            <pre class="section-title pb-1">Data Information</pre>
+                                                            <p class="description">
+                                                                Ratelimiter will automatically refresh this information <code>{{formatMillis user._cacheTime}}</code>.
+                                                                <br>
+                                                                We use <a href="https://royaleapi.com" class="text-argon">RoyaleAPI</a> to request Clash Royale information, go check 'em out!</i>
+                                                            </p>
+                                                            <pre class="section-title pt-2 pb-1">API Information</pre>
+                                                            <p class="description">
+                                                                Status: <span class="text-{{user.status.health.status_color}}">{{user.status.health.status_text}}</span>
+                                                                <br>
+                                                                Rate Limit: <span class="text-{{user.status.ratelimit.status_color}}">{{user.status.ratelimit.status_text}}</span>
+                                                                <br>
+                                                                RT Link: {{user.status.link}}ms
+                                                            </p>
+                                                            <pre class="section-title pt-2 pb-1">Callstack</pre>
+                                                            <p class="description">
+                                                                {{{localizeHttpIcon user.code}}} <span class="text-argon">GET</span> /player/{{user.tag}} <span class="text-{{latencyColor user.link}}">({{user.link}}ms)</span>
+                                                                <br>
+                                                                {{{localizeHttpIcon user.battles.code}}} <span class="text-argon">GET</span> /player/{{user.tag}}/battles <span class="text-{{latencyColor user.battles.link}}">({{user.battles.link}}ms)</span>
+                                                                <br>
+                                                                {{{localizeHttpIcon user.chests.code}}} <span class="text-argon">GET</span> /player/{{user.tag}}/chests <span class="text-{{latencyColor user.chests.link}}">({{user.chests.link}}ms)</span>
+                                                                <br>
+                                                                {{{localizeHttpIcon user.status.code}}} <span class="text-argon">GET</span> /version <span class="text-{{latencyColor user.status.link}}">({{user.status.link}}ms)</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer class="footer bg-custom">
+                <div class="container">
+                    <div class="row align-items-center justify-content-md-between">
+                        <div class="col-md-6">
+                            <div class="copyright text-secondary">
+                                <a class="text-argon font-weight-bold shine" href="https://www.argon.club">Argon</a> &copy;
+                                <script>
+                                    $('.copyright').append(new Date().getFullYear() + " ");
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="nav nav-footer justify-content-end">
+                                <li class="nav-item">
+                                    <a href="/" class="text-secondary nav-link shine">home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/team" class="text-secondary nav-link shine">team</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/status" class="text-secondary nav-link shine">status</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+        <script src="/js/core/argon.js?v=1.0.0"></script>
+        <script src="/js/core/base.js"></script>
+
+        <script src="/js/plugins/countUp.min.js"></script>
+        <script src="/js/plugins/jquery.toast.min.js"></script>
+        <script src="/js/plugins/particles.js"></script>
+        <script src="/js/plugins/perfect-scrollbar.js"></script>
+        <script src="/js/plugins/typed.min.js"></script>
+
+        <script src="https://unpkg.com/tippy.js@4"></script>
+
+        <script>
+                $('.scroll-down').on('click', (e) => {
+                    e.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $('#body').offset().top
+                    }, 1500);
+                });
+                const board = new ClipboardJS('.cr-tag');
+                board.on('success', (e) => {
+                    $.toast({
+                        text: `Successfully copied <b>{{user.tag}}</b> to the clipboard.`,
+                        bgColor: '#4a6784',
+                        textColor: '#fff',
+                        loaderBg: '#fff',
+                        allowToastClose: true,
+                        hideAfter: 1000,
+                        showLoader: true,
+                        position: 'top-right',
+                    });
+                });
+            </script>
+    </body>
+</html>
