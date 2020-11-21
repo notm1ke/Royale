@@ -1,42 +1,61 @@
 import env from 'dotenv';
 import cron from 'node-cron';
-
-import { Client } from 'croyale';
-import * as Player from 'croyale/lib/structures/Player'
-import * as PlayerBattles from 'croyale/lib/structures/PlayerBattles'
-import * as PlayerChest from 'croyale/lib/structures/PlayerChests'
-
 import countries from './countries';
+
+import Player from 'croyale/lib/structures/Player';
+import PlayerBattles from 'croyale/lib/structures/PlayerBattles';
+import PlayerChests from 'croyale/lib/structures/PlayerChests';
+
 import * as localizer from './localize';
 
-import { Colors } from './logger';
-import log from './logger';
+import { Client } from 'croyale';
+import { Logger, Colors } from './logger';
 
 env.config();
 
-const logger = log('API');
+const ratelimitWarning = process.env.RATELIMIT_WARNING || 2;
 const Service = new Client(process.env.CR_API_KEY);
+
+// eslint-disable-next-line
+const { Api } = Service;
+
+export type PlatformStatus = {
+    ratelimit: {
+        status: boolean,
+        status_text: string,
+        status_color: string
+    },
+    health: {
+        status: boolean,
+        status_text: string,
+        status_color: string
+    },
+    code: number,
+    link: number
+}
+
+export type ErrorResponse {
+    code: number,
+    message: string
+}
 
 /**
  * Initializes the Ratelimiter in
  * order for the Cron job to be able
  * to access **_rateLimitRemaining**.
  */
-const initRatelimiter = async () => {
-    await getStatus();
-};
-initRatelimiter();
+new Promise(async () => await getStatus());
 
 cron.schedule('* * * * *', () => {
-    if (Service.Api._rateLimitRemaining <= 2) {
-        logger.warn(`Ratelimit Warning: ${logger.wrapColor(Colors.magenta, Service.Api._rateLimitRemaining + ' requests')} remaining. ${logger.wrapColor(Colors.dim, `(${Service.Api._rateLimiter.requests.length} req${Service.Api._rateLimiter.requests.length > 1 ? 's' : ''}/sec)`)}`);
+    if (Api._rateLimitRemaining <= ratelimitWarning) {
+        Logger.warn('Ratelimit', `Ratelimit Warning: ${Logger.wrap(Colors.MAGENTA, Api._rateLimitRemaining + ' requests')} remaining. ${Logger.wrap(Colors.DIM, `(${Api._rateLimiter.requests.length} req${Service.Api._rateLimiter.requests.length > 1 ? 's' : ''}/sec)`)}`);
         return;
     }
-    if (Service.Api._rateLimitRemaining == 0) {
-        logger.warn(`Ratelimit Exceeded ${logger.wrapColor(Colors.dim, `(${Service.Api._rateLimiter.requests.length} req${Service.Api._rateLimiter.requests.length > 1 ? 's' : ''}/sec)`)}`);
+    if (Api._rateLimitRemaining == 0) {
+        Logger.warn('Ratelimit', `Ratelimit Exceeded ${Logger.wrap(Colors.DIM, `(${Api._rateLimiter.requests.length} req${Api._rateLimiter.requests.length > 1 ? 's' : ''}/sec)`)}`);
         return;
     }
-});
+}, {});
 
 /**
  * Attempts to retrieve an object
@@ -46,18 +65,18 @@ cron.schedule('* * * * *', () => {
  * @param {string} client_id  the client's id 
  * @returns {Promise<Object>} wrapped Player object
  */
-export async function getComprehensiveUser(client_id) {
-    let res = await getUser(client_id);
+export async function getComprehensiveUser(client_id: string): Promise<object | ErrorResponse> {
+    let res: any = await getUser(client_id);
     if (res.code !== 200) {
         return { code: res.status, message: res.message };
     }
 
-    let chests = await getChests(client_id);
+    let chests: any = await getChests(client_id);
     if (chests.code !== 200) {
         return { code: chests.status, message: chests.message };
     }
 
-    let battles = await getBattles(client_id);
+    let battles: any = await getBattles(client_id);
     if (battles.code !== 200) {
         return { code: battles.status, message: battles.message };
     }
@@ -82,14 +101,14 @@ export async function getComprehensiveUser(client_id) {
  * @param {string} client_id  the client's id
  * @returns {Promise<Player>} wrapped Player object
  */
-export async function getUser(client_id) {
+export async function getUser(client_id: string): Promise<Player> {
     const start = Date.now();
     return await Service.Users.getProfile(client_id).then((res) => {
         res.code = 200;
-        res.link = parseFloat(Date.now() - start).toFixed(1);
+        res.link = parseFloat(String(Date.now() - start)).toFixed(1);
         return res;
     }).catch((err) => {
-        logger.except(err, `Error fetching ${client_id}`);
+        Logger.except(err, 'Repo', `Error fetching ${client_id}`);
         if (err.error) {
             return { code: err.status, message: localizer.localizeHttpStatus(err.status) }
         }
@@ -105,17 +124,18 @@ export async function getUser(client_id) {
  * @param {string} client_id         the client's id
  * @returns {Promise<PlayerChest[]>} object of PlayerChest items
  */
-export async function getChests(client_id) {
+export async function getChests(client_id: string): Promise<PlayerChests[]> {
     const start = Date.now();
     return await Service.Users.getChests(client_id).then((res) => {
         res.code = 200;
-        res.link = parseFloat(Date.now() - start).toFixed(1);
+        res.link = parseFloat(String(Date.now() - start)).toFixed(1);
         return res;
     }).catch((err) => {
-        logger.except(err, `Error fetching ${client_id}'s chests`);
+        Logger.except(err, 'Repo', `Error fetching ${client_id}'s chests`);
         if (err.error) {
             return { code: err.status, message: localizer.localizeHttpStatus(err.status) }
         }
+
         return { message: err };
     });
 }
@@ -128,14 +148,14 @@ export async function getChests(client_id) {
  * @param {string} client_id           the client's id 
  * @returns {Promise<PlayerBattles[]>} object of PlayerBattle items
  */
-export async function getBattles(client_id) {
+export async function getBattles(client_id: string): Promise<PlayerBattles[]> {
     const start = Date.now();
     return await Service.Users.getBattles(client_id).then((res) => {
         res.code = 200;
-        res.link = parseFloat(Date.now() - start).toFixed(1);
+        res.link = parseFloat(String(Date.now() - start)).toFixed(1);
         return res;
     }).catch((err) => {
-        logger.except(err, `Error fetching ${client_id}'s battles`);
+        Logger.except(err, 'Repo', `Error fetching ${client_id}'s battles`);
         if (err.error) {
             return { code: err.status, message: localizer.localizeHttpStatus(err.status) }
         }
@@ -153,7 +173,7 @@ export async function getBattles(client_id) {
  * 
  * @returns {Promise<Object>} the object containing the leaderboard
  */
-export async function getLeaderboard(location, resLimit) {
+export async function getLeaderboard(location: string, resLimit: number) {
     const start = Date.now();
     let territory;
     for (const k in Object.entries(countries)) {
@@ -169,7 +189,7 @@ export async function getLeaderboard(location, resLimit) {
         throw new Error(`Territory '${location}' not found.`);
     }
 
-    let leaderboard = {};
+    let leaderboard: any = {};
     let limit = resLimit || 200;
     
     if (limit > 200) {
@@ -181,7 +201,7 @@ export async function getLeaderboard(location, resLimit) {
     result = result.slice(0, limit);
     leaderboard.region = territory.key;
     leaderboard.limit = limit;
-    leaderboard.link = parseFloat(Date.now() - start).toFixed(1);
+    leaderboard.link = parseFloat(String(Date.now() - start)).toFixed(1);
     
     Object.assign(leaderboard, result);
     return leaderboard;
@@ -192,9 +212,9 @@ export async function getLeaderboard(location, resLimit) {
  * of our service in relation to
  * the upstream API.
  * 
- * @returns {Promise<Object>} the object containing our status
+ * @returns {Promise<PlatformStatus>} the object containing our status
  */
-export async function getStatus() {
+export async function getStatus(): Promise<PlatformStatus> {
     const start = Date.now();
     return await Service.Api._get(`version`).then((res) => {
         return {
@@ -209,7 +229,7 @@ export async function getStatus() {
                 status_color: 'success'
             },
             code: 200,
-            link: parseFloat(Date.now() - start).toFixed(1)
+            link: parseFloat(String(Date.now() - start)).toFixed(1)
         }
     }).catch((err) => {
         if (!err.error && !err.status) {
@@ -229,7 +249,7 @@ export async function getStatus() {
             };
         }
 
-        let health;
+        let health = 'Operational';
 
         switch(err.status) {
             case 400:
@@ -256,7 +276,7 @@ export async function getStatus() {
                 status_color: health == 'Online' ? 'success' : 'danger'
             },
             code: err.status,
-            link: parseFloat(Date.now() - start).toFixed(1)
+            link: parseFloat(String(Date.now() - start)).toFixed(1)
         }
     });
 }
@@ -273,7 +293,7 @@ export async function getStatus() {
  * 
  * @returns {Promise<Boolean>} if they are in the leaderboard
  */
-export async function isTop(tag, location, limit) {
+export async function isTop(tag: string, location: string, limit: number): Promise<boolean> {
     return await getLeaderboard(location, limit).then((res) => {
         res = res.slice(0, limit);
         for (const k in Object.entries(res)) {
@@ -283,9 +303,10 @@ export async function isTop(tag, location, limit) {
                 return true;
             }
         }
+
         return false;
     }).catch((err) => {
-        logger.except(err, `Error checking if ${tag} is in top ${limit} of the ${location} leaderboard.`);
+        Logger.except(err, 'Repo', `Error checking if ${tag} is in top ${limit} of the ${location} leaderboard.`);
         return false;
     });
 }

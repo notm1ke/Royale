@@ -1,23 +1,18 @@
 import express from 'express';
 import flash from 'connect-flash';
-import moment from 'moment';
 import path from 'path';
 import ora from 'ora';
 import env from 'dotenv';
-import hbs from 'hbs';
 
-import { Colors } from './lib/logger';
-import log from './lib/logger';
-
+import BaseRouter from './routes';
 import * as helpers from './lib/hbs_helpers';
 
-import BaseRouter from './routes/index';
+import { Logger, Colors } from './lib/logger';
 
 env.config();
 
 const app = express();
 const start = Date.now();
-const logger = log('Royale');
 const loader = ora('Starting up..').start();
 
 new Promise(() => {
@@ -33,10 +28,10 @@ new Promise(() => {
     app.use('/', BaseRouter);
 
     app.listen(process.env.PORT || 3000, () => {
-        loader.succeed(`${logger.wrapColor(Colors.cyan, 'Royale')} has finished starting up. ${logger.wrapColor(Colors.dim, `(${parseFloat(Date.now() - start).toFixed(2)}ms)`)}`);
+        loader.succeed(`${Logger.wrap(Colors.CYAN, 'Royale')} has finished starting up. ${Logger.wrap(Colors.DIM, `(${parseFloat(String(Date.now() - start)).toFixed(2)}ms)`)}`);
     });
 }).catch((err) => {
-    loader.fail(`A fatal error occurred preventing ${Colors.cyan}Royale${Colors.reset} from starting up.`);
+    loader.fail(`A fatal error occurred preventing ${Logger.wrap(Colors.CYAN, 'Royale')} from starting up.`);
     console.error(err.stack);
     process.exit(-1);
 });

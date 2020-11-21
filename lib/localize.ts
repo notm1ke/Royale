@@ -1,4 +1,9 @@
-export function localizeHttpStatus(status) {
+/**
+ * Localizes a standard HTTP status code.
+ * @param status the status code
+ * @returns the localized message
+ */
+export function localizeHttpStatus(status: number): string {
     switch(status) {
         case 400: return 'Bad Request';
         case 401: return 'Unauthorized';

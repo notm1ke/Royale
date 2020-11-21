@@ -32,77 +32,6 @@
         <script src="/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     </head>
     <body class="profile-page bg-custom">
-        <header class="header-global">
-            <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light">
-                <div class="container">
-                    <a class="navbar-brand mr-lg-1" href="/">
-                        <img class="nav-logo-fix" src="/img/branding/argon_white.png">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse" id="navbar_global">
-                        <div class="navbar-collapse-header">
-                            <div class="row">
-                                <div class="col-6 collapse-brand">
-                                    <a href="/">
-                                        <img src="/img/branding/argon_white.png">
-                                    </a>
-                                </div>
-                                <div class="col-6 collapse-close">
-                                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                                        <span></span>
-                                        <span></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="navbar-nav navbar-nav-hover align-items-lg-center"></ul>
-                        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-                            {{#if auth}}
-                            <li class="nav-item dropdown">
-                                <a class="btn text-white" href="#" id="accounts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="btn-inner--icon">
-                                            <img src="https://s3.amazonaws.com/argon-attachments/1540657588260-avatar.png" alt="img" class="pfp-box">
-                                        </span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accounts" style="margin-top: 0.7rem;">
-                                    <div class="dropdown-header">
-                                        <h6 class="text-overflow noti-title m-0">Signed in as <b class="text-blue" style="font-weight: 500;">{{user.username}}</b></h6>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/u/@me">
-                                        <i class="fas fa-user-circle"></i>
-                                        <span>My Profile</span>
-                                    </a>
-                                    <a class="dropdown-item" href="/prefs">
-                                        <i class="fas fa-cog"></i>
-                                        <span>Preferences</span>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/logout">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>Logout</span>
-                                    </a>
-                                </div>
-                            </li>
-                            {{else}}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link nav-link-icon" href="#" id="accounts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-lock"></i>
-                                    <span class="nav-link-inner--text d-lg-none">Accounts</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accounts">
-                                    <a href="/login" class="dropdown-item">Login</a>
-                                    <a href="/register" class="dropdown-item">Register</a>
-                                </div>
-                            </li>
-                            {{/if}}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
         <main class="profile-page">
             <section class="section-profile-cover section-shaped my-0">
                 <div class="position-relative">
@@ -367,33 +296,6 @@
                     </div>
                 </div>
             </section>
-            <footer class="footer bg-custom">
-                <div class="container">
-                    <div class="row align-items-center justify-content-md-between">
-                        <div class="col-md-6">
-                            <div class="copyright text-secondary">
-                                <a class="text-argon font-weight-bold shine" href="https://www.argon.club">Argon</a> &copy;
-                                <script>
-                                    $('.copyright').append(new Date().getFullYear() + " ");
-                                </script>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="nav nav-footer justify-content-end">
-                                <li class="nav-item">
-                                    <a href="/" class="text-secondary nav-link shine">home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/team" class="text-secondary nav-link shine">team</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/status" class="text-secondary nav-link shine">status</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </main>
         <script src="/js/core/argon.js?v=1.0.0"></script>
         <script src="/js/core/base.js"></script>

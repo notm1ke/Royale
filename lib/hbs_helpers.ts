@@ -66,7 +66,7 @@ export function init() {
             sum += cards[k].elixir;
         }
 
-        return parseFloat(sum / cards.length).toFixed(1);
+        return parseFloat(String(sum / cards.length)).toFixed(1);
     });
 
     hbs.registerHelper('localizeHttpIcon', (e) => {
